@@ -1,6 +1,6 @@
 # Leetcode-pyq
 
-This is my personal record of solving problems on leetcode.com.
+This repo is my personal record of solving problems on leetcode.com.
 
 This repo contains three folders:
 
