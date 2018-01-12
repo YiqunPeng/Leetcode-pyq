@@ -8,12 +8,10 @@ class Solution(object):
         """
         if N == 15: return 24679
         nums = [i for i in xrange(N, 0, -1)]
-        # arr = []
         self.make_arrangement(1, nums, N)
         return self.ans
     
     def make_arrangement(self, index, nums, N):
-        # lenA = len(arr)
         if index == (N+1):
             self.ans += 1
             return
