@@ -6,7 +6,6 @@ class Solution:
         """
         N = len(nums)
         dp = [[[0,0] for i in range(N)] for j in range(N)]
-        nums_sum = sum(nums)
         
         for i in range(N):
             dp[i][i][0] = nums[i]
