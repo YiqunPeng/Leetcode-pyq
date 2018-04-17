@@ -8,14 +8,22 @@ class Solution:
         
         length = 0
         pre = nums[0] - 1
+        cnt = 0
         
         for i in range(len(nums)):
-            if nums[i] == pre: 
+            if nums[i] == pre and cnt == 2:
                 continue
-            else:
+            elif nums[i] == pre and cnt < 2:
+                cnt += 1
                 length += 1
                 nums[length-1] = nums[i]
+            elif nums[i] != pre:
+                length += 1
+                cnt = 1
+                nums[length-1] = nums[i]
                 pre = nums[i]
-        
+                
         return length
-            
+        
+        
+        
