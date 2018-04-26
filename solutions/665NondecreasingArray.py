@@ -8,7 +8,7 @@ class Solution(object):
         for i in xrange(len(nums)-2):
             n1, n2, n3 = nums[i], nums[i+1], nums[i+2]
             if n1 <= n2 and n2 <= n3: continue
-            if n1 > n2 and n2 > n2: return False
+            if n1 > n2 and n2 > n3: return False
             if n1 <= n2 and n2 > n3 and n3 > n1: 
                 nums[i+1] = nums[i]
                 break

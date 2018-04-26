@@ -30,7 +30,7 @@ class Solution:
             if abs(right-left) > 1:
                 return False
             else:
-                return balanced_tree(r.left) and balanced_tree(r.left) 
+                return balanced_tree(r.left) and balanced_tree(r.right) 
         
         
         if not root: return True        

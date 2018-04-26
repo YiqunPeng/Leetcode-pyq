@@ -1,0 +1,7 @@
+organization=yiqunpeng-github
+projectKey=leetcode
+serverUrl=https://sonarcloud.io
+serverVersion=7.1.1.10702
+dashboardUrl=https://sonarcloud.io/dashboard/index/leetcode
+ceTaskId=AWMC18kGOnVewt-wirci
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWMC18kGOnVewt-wirci
