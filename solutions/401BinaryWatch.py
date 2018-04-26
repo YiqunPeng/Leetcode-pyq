@@ -19,7 +19,6 @@ class Solution(object):
         return ans
     
     def compute_minutes(self, comb):
-        # enum = [480, 240, 120, 60, 32, 16, 8, 4, 2, 1]
         enum = [1, 2, 4, 8, 16, 32, 60, 120, 240, 480]
         low_dig = 0
         minutes = 0

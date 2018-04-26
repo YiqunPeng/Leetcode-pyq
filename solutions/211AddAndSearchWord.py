@@ -26,7 +26,6 @@ class WordDictionary:
         """
         node = self.root
         for i in range(len(word)):
-            # pos = ord(word[i]) - ord('a')
             if word[i] not in node.child_nodes:
                 node.child_nodes[word[i]] = TreeNode(word[i])
             node = node.child_nodes[word[i]]

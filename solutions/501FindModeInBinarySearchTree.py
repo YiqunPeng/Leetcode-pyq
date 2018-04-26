@@ -12,9 +12,6 @@ class Solution:
         :rtype: List[int]
         """
         def handle(val, cur_val, cur_cnt, max_cnt, a):
-            # print(val)
-            # print(cur_val)
-            # print(a)
             if val != cur_val:
                 cur_val = val
                 cur_cnt = 1
@@ -26,7 +23,6 @@ class Solution:
                 a.append(cur_val)
             elif cur_cnt == max_cnt:
                 a.append(cur_val)
-            # print(a)
             return cur_val, cur_cnt, max_cnt, a
         
         

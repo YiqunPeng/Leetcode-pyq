@@ -21,8 +21,6 @@ class Solution:
                 max_color.append(answer + 1)
                 color.append(1)
         
-        # print(max_color)
-        # print(color)
         return sum(max_color)
                 
                 

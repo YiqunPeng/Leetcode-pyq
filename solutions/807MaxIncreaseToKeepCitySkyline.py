@@ -9,8 +9,6 @@ class Solution:
             for j in range(len(grid[0])):
                 left[i] = max(left[i], grid[i][j])
                 top[j] = max(top[j], grid[i][j])
-        # print(top)
-        # print(left)
         
         ans = 0
         for i in range(len(grid)):
