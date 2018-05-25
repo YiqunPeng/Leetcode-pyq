@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution():
     def twoSum(self, nums, target):
         """
         :type nums: List[int]
@@ -6,9 +6,9 @@ class Solution(object):
         :rtype: List[int]
         """
         dic = {}
-        for i in xrange(len(nums)):
+        for i in range(len(nums)):
             sub = target - nums[i]
-            if dic.has_key(sub):
+            if sub in dic:
                 return [i, dic[sub]]
             else:
                 dic[nums[i]] = i
