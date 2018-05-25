@@ -5,7 +5,7 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
+class Solution():
     def constructMaximumBinaryTree(self, nums):
         """
         :type nums: List[int]
@@ -18,7 +18,7 @@ class Solution(object):
         
         max = nums[l]
         max_pos = l
-        for i in xrange(l+1, r+1):
+        for i in range(l+1, r+1):
             if nums[i] > max:
                 max = nums[i]
                 max_pos = i
