@@ -1,10 +1,10 @@
 # Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
+class Solution:
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: ListNode
@@ -21,7 +21,7 @@ class Solution(object):
                 l.val += l2.val
                 l2 = l2.next
             if l1 or l2:
-                l.next = ListNode(l.val / 10)
+                l.next = ListNode(l.val // 10)
                 l.val = l.val % 10
                 l = l.next
         if l.val >= 10:
