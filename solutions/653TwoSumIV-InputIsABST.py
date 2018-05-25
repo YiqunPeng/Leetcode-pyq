@@ -5,7 +5,7 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):  
+class Solution():  
     def findTarget(self, root, k):
         """
         :type root: TreeNode
