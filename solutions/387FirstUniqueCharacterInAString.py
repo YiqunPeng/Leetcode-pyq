@@ -1,15 +1,19 @@
-class Solution(object):
+class Solution:
     def firstUniqChar(self, s):
         """
         :type s: str
         :rtype: int
         """
-        c_hash = [0 for i in xrange(26)]
-        c_list = list(s)
-        for c in c_list:
-            c_hash[ord(c) - ord('a')] += 1
-        for i in xrange(len(c_list)):
-            if c_hash[ord(c_list[i]) - ord('a')] == 1:
+        dic = {}
+        for c in s:
+            if c in dic:
+                dic[c] += 1
+            else:
+                dic[c] = 1
+        
+        for i, c in enumerate(s):
+            if dic[s[i]] == 1:
                 return i
+        
         return -1
             
