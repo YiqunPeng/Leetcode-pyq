@@ -7,15 +7,13 @@ class Solution:
         """
         def backtracking(ans, candi, tar, cur, cur_sum, s, e):
             if cur_sum == tar:
-                ans.append(copy.deepcopy(cur))
+                ans.append(cur)
                 return 0 
             if cur_sum > tar:
                 return -1
             
             for i in range(s, e):
-                cur.append(candi[i])                
-                res = backtracking(ans, candi, tar, cur, cur_sum+candi[i], i, e)
-                cur.pop(-1)
+                res = backtracking(ans, candi, tar, cur+[candi[i]], cur_sum+candi[i], i, e)
                 if res == -1 or res == 0:
                     break
         
