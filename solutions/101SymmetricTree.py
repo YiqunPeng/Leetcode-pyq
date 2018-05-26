@@ -5,7 +5,6 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
     def isSymmetric(self, root):
         """
         :type root: TreeNode
@@ -27,4 +26,3 @@ class Solution(object):
         elif not l.left and l.right:
             return not r.right and self.is_symmetric(l.right, r.left)
         else:
-            return not r.left and not r.right

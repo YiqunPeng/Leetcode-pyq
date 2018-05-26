@@ -21,10 +21,17 @@ class Solution(object):
                 return -1
             
         for i in range(n):
+<<<<<<< HEAD
             if i == cele: continue
+=======
+>>>>>>> d034f7c28b4e2864c5f7651cc55f6dc1e4a33947
             if not knows(i, cele):
                 return -1
         
         return cele
                     
+<<<<<<< HEAD
         
+=======
+        
+>>>>>>> d034f7c28b4e2864c5f7651cc55f6dc1e4a33947
