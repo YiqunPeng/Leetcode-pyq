@@ -14,3 +14,4 @@ class Solution():
                 dic[nums[i]] = i
                 
         
+        
