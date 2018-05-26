@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+class Solution():
     def constructMaximumBinaryTree(self, nums):
         """
         :type nums: List[int]
@@ -17,6 +18,7 @@
         
         max = nums[l]
         max_pos = l
+        for i in range(l+1, r+1):
             if nums[i] > max:
                 max = nums[i]
                 max_pos = i
@@ -25,3 +27,4 @@
         root.left = self.construct_tree(nums, l, max_pos-1)
         root.right = self.construct_tree(nums, max_pos+1, r)
         
+        return root

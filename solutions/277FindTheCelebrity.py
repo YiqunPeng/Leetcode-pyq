@@ -24,6 +24,8 @@ class Solution(object):
 <<<<<<< HEAD
             if i == cele: continue
 =======
+            if i == cele: 
+                continue
 >>>>>>> d034f7c28b4e2864c5f7651cc55f6dc1e4a33947
             if not knows(i, cele):
                 return -1

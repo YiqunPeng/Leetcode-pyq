@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+class Solution():  
     def findTarget(self, root, k):
         """
         :type root: TreeNode
@@ -26,3 +27,4 @@
     def traversal(self, root, arr):
         if root.left: self.traversal(root.left, arr)
         arr.append(root.val)
+        if root.right: self.traversal(root.right, arr)
