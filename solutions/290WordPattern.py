@@ -1,27 +1,29 @@
-class Solution(object):
+class Solution:
     def wordPattern(self, pattern, str):
         """
         :type pattern: str
         :type str: str
         :rtype: bool
         """
-        str_list = str.split(' ')
-        if len(str_list) != len(pattern): return False
+        words = str.split(' ')
+        w_len = len(words)
+        p_len = len(pattern)
         
-        p_dict = {}
-        for i in xrange(len(pattern)):
-            if p_dict.has_key(pattern[i]):
-                if p_dict[pattern[i]] != str_list[i]:
-                    return False
-            else:
-                p_dict[pattern[i]] = str_list[i]
+        if w_len != p_len: return False
         
-        s_dict = {}
-        for i in xrange(len(str_list)):
-            if s_dict.has_key(str_list[i]):
-                if s_dict[str_list[i]] != pattern[i]:
-                    return False
+        p_dic = {}
+        w_dic = {}
+        for i in range(p_len):
+            if pattern[i] not in p_dic:
+                p_dic[pattern[i]] = words[i]
             else:
-                s_dict[str_list[i]] = pattern[i]       
-                
+                if words[i] != p_dic[pattern[i]]:
+                    return False
+            if words[i] not in w_dic:
+                w_dic[words[i]] = pattern[i]
+            else:
+                if pattern[i] != w_dic[words[i]]:
+                    return False
+        
         return True
+        
