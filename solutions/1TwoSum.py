@@ -12,4 +12,3 @@ class Solution():
                 return [i, dic[sub]]
             else:
                 dic[nums[i]] = i
-                
