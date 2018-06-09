@@ -4,14 +4,15 @@ class Solution:
         :type s: str
         :rtype: int
         """
-        if not s: return 0
-        
+        if not s:
+            return 0
+
         ans = 1
         s_len = len(s)
-        
+
         left, right = 0, 1
-        dic = {s[0]:0}
-        
+        dic = {s[0]: 0}
+
         while right < s_len:
             if s[right] == s[left]:
                 dic[s[left]] = right
@@ -26,9 +27,5 @@ class Solution:
             else:
                 dic[s[right]] = right
                 right += 1
-        
+
         return max(ans, len(s)-left)
-                
-            
-            
-            
