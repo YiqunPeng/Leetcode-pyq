@@ -17,9 +17,7 @@ class Solution:
             while q:
                 i, j = q.pop(0)
                 for n_i, n_j in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
-                    if not (0 <= n_i < m and 0 <= n_j < n):
-                        continue
-                    if v[n_i][n_j]:
+                    if not (0 <= n_i < m and 0 <= n_j < n) or v[n_i][n_j]:
                         continue
                     if grid[n_i][n_j] == 1:
                         v[n_i][n_j] = True
