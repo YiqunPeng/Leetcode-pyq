@@ -4,31 +4,31 @@ class Solution:
         :type chars: List[str]
         :rtype: int
         """
-        if not chars: return 0
-        
-        pre_char = chars[0]
-        cnt = 1
         ans = 0
-        start, total = 0, 0
-        chars_len = len(chars)
+        pre = chars[0]
         
-        while total < chars_len:
-            if start+1 < len(chars) and chars[start+1] == pre_char:
-                cnt += 1
-                total += 1
-                chars.pop(start+1)
+        cnt = 0
+        for c in chars[1:]:
+            if c != pre:
+                if cnt > 0:
+                    cnt = str(cnt + 1)
+                    for i in range(len(cnt)):
+                        ans += 1
+                        chars[ans] = cnt[i]
+                ans += 1
+                chars[ans] = c
+                cnt = 0
+                pre = c
             else:
-                ans += (1 + int(math.log(cnt, 10)+1))
-                total += 1
-                start += 1
-                if cnt != 1:
-                    str_cnt = str(cnt)
-                    for c in str_cnt:
-                        chars.insert(start, c)
-                        start += 1
-                cnt = 1
-                if start < len(chars):
-                    pre_char = chars[start]                        
+                cnt += 1
         
-        ans = ans + 1 + int(math.log(cnt, 10)+1)
-        print(ans)
+        if cnt != 0:
+            cnt = str(cnt + 1)
+            for i in range(len(cnt)):
+                ans += 1
+                chars[ans] = cnt[i]
+        ans += 1
+        
+        return ans 
+                
+        
