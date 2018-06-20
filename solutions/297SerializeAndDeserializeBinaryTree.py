@@ -13,20 +13,18 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        if not root: return ''
-
-        q = [(root, 0)]
-        res = str(root.val) + ',0'
-        while q:
-            node, pos = q.pop(0)
-            if node.left:
-                q.append((node.left, pos*2+1))
-                res = res + '#' + str(node.left.val) + ',' + str(pos*2+1)
-            if node.right:
-                q.append((node.right, pos*2+2))
-                res = res + '#' + str(node.right.val) + ',' + str(pos*2+2)
-
-        return res
+        vals = []
+        
+        def preorder(node):
+            if not node:
+                vals.append('#')
+            else:
+                vals.append(str(node.val))
+                preorder(node.left)
+                preorder(node.right)
+        
+        preorder(root)
+        return ' '.join(vals)
 
 
     def deserialize(self, data):
@@ -35,27 +33,19 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        if not data: return None
+        vals = iter(data.split(' '))
         
-        nodes = data.split('#')
-        
-        node_pos = {}
-        
-        r = nodes[0].split(',')
-        root = TreeNode(int(r[0]))
-        node_pos[int(r[1])] = root
-        
-        for i in range(1, len(nodes)):
-            n = nodes[i].split(',')
-            val, pos = int(n[0]), int(n[1])
-            node = TreeNode(val)
-            node_pos[pos] = node
-            if pos % 2 == 0:
-                node_pos[(pos-1)//2].right = node
+        def preorder():
+            val = next(vals)
+            if val == '#':
+                return None
             else:
-                node_pos[(pos-1)//2].left = node
+                node = TreeNode(val)
+                node.left = preorder()
+                node.right = preorder()
+            return node
         
-        return root
+        return preorder()
         
 
 # Your Codec object will be instantiated and called as such:
