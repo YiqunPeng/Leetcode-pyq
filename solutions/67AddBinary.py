@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def addBinary(self, a, b):
         """
         :type a: str
@@ -12,12 +12,11 @@ class Solution(object):
         bin = ''
         while a != 0:
             bin = str(a % 2) + bin
-            a = a / 2
+            a = a // 2
         return bin
     
     def bin2dec(self, s):
         dec = 0
-        for i in xrange(len(s)):
+        for i in range(len(s)):
             dec = dec + int(s[i]) * 2 ** (len(s) - 1 - i)
-        print(dec)
-        return dec
+        return dec       
