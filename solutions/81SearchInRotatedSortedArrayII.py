@@ -3,13 +3,17 @@ class Solution:
         """
         :type nums: List[int]
         :type target: int
-        :rtype: int
+        :rtype: bool
         """
         l, r = 0, len(nums) - 1
         while l <= r:
             m = l + (r - l) // 2
             if nums[m] == target:
-                return m
+                return True
+            
+            if nums[l] == nums[r]:
+                l += 1
+                continue
 
             if nums[l] <= nums[m]:
                 if nums[m] > target and nums[l] <= target:
@@ -22,7 +26,6 @@ class Solution:
                 else:
                     r = m - 1
 
-        return -1
-                    
-        
+        return False
+                
         
