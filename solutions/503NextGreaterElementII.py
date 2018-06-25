@@ -4,26 +4,15 @@ class Solution:
         :type nums: List[int]
         :rtype: List[int]
         """
-        nums_len = len(nums)
-        ans = [-1] * nums_len
-        if nums_len == 0: return []
+        n = len(nums)
+        ans = [-1] * n
         
-        stack = [0]
-        for i in range(1, nums_len):
-            flag = 1
-            while flag and stack:
-                top = stack[-1]
-                if nums[i] > nums[top]:
-                    ans[top] = nums[i]
-                    stack.pop(-1)
-                else:
-                    flag = 0
-            stack.append(i)
-        
-        for i in stack:
-            for j in range(0, i):
-                if nums[j] > nums[i]:
-                    ans[i] = nums[j]
-                    break
+        stack = []
+        for i in range(2 * n):
+            num = nums[i % n]
+            while stack and nums[stack[-1]] < num:
+                ans[stack.pop()] = num
+            if i < n: stack.append(i)
         
         return ans
+        

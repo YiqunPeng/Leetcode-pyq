@@ -1,25 +1,17 @@
-class Solution(object):
+class Solution():
     def nextGreaterElement(self, findNums, nums):
         """
         :type findNums: List[int]
         :type nums: List[int]
         :rtype: List[int]
         """
-        res = []
+        stack = []
+        dic = {}
+        for num in nums:
+            while stack and stack[-1] < num:
+                dic[stack.pop()] = num
+            stack.append(num)
         
-        len1 = len(findNums)
-        len2 = len(nums)
-        
-        for num in findNums:
-            res.append(self.find_gtr_ele(num, nums))
-            
-        return res
-    
-    def find_gtr_ele(self, num, nums):
-        flag = 0
-        for n in nums:
-            if n == num:
-                flag = 1
-            if flag == 1 and n > num:
-                return n
-        return -1
+        for i in range(len(findNums)):
+            findNums[i] = dic.get(findNums[i], -1)
+        return findNums
