@@ -6,7 +6,7 @@ class PhoneDirectory:
         @param maxNumbers - The maximum numbers that can be stored in the phone directory.
         :type maxNumbers: int
         """
-        self.unused = set(self.nums)
+        self.unused = set(range(maxNumbers))
         self.used = set()
         
 
