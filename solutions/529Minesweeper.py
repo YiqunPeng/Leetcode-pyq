@@ -1,45 +1,42 @@
-class Solution(object):
+class Solution:
     def updateBoard(self, board, click):
         """
         :type board: List[List[str]]
         :type click: List[int]
         :rtype: List[List[str]]
         """
-        if board[click[0]][click[1]] == 'M':
-            board[click[0]][click[1]] = 'X'
-            return board
-        if board[click[0]][click[1]] == 'E':
-            cnt = self.count_mine(board, click)
-            if cnt != 0:
-                board[click[0]][click[1]] = str(cnt)
-                return board
-            else:
-                board[click[0]][click[1]] = 'B'
-                self.dfs(board, click)
-                return board
-    
-    def dfs(self, board, pos):
-        for i in xrange(-1, 2):
-            for j in xrange(-1, 2):
-                x = pos[0] + i
-                y = pos[1] + j
-                if i == 0 and j == 0: continue
-                if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]): continue
-                if board[x][y] == 'E':
-                    cnt = self.count_mine(board, [x,y])
-                    if cnt != 0:
-                        board[x][y] = str(cnt)
-                    else:
-                        board[x][y] = 'B'
-                        self.dfs(board, [x, y])    
+        def count_mines(x, y):
+            m, n = len(board), len(board[0])
+            adj = [(x-1,y-1), (x-1,y), (x-1,y+1), (x,y-1), (x,y+1), (x+1,y-1), (x+1,y), (x+1,y+1)]
+            res = 0
+            for nx, ny in adj:
+                if not (0 <= nx < m and 0 <= ny < n): continue
+                if board[nx][ny] == 'M':
+                    res += 1
+            return res
         
-    def count_mine(self, board, pos):
-        cnt = 0
-        for i in xrange(-1, 2):
-            for j in xrange(-1, 2):
-                x = pos[0] + i
-                y = pos[1] + j
-                if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]): continue
-                if board[x][y] == 'M':
-                    cnt += 1
-        return cnt
+        def dfs(x, y):
+            m, n = len(board), len(board[0])
+            adj = [(x-1,y-1), (x-1,y), (x-1,y+1), (x,y-1), (x,y+1), (x+1,y-1), (x+1,y), (x+1,y+1)]
+            for nx, ny in adj:
+                if not (0 <= nx < m and 0 <= ny < n and board[nx][ny] == 'E'): continue
+                cnt = count_mines(nx, ny)
+                if cnt != 0:
+                    board[nx][ny] = str(cnt)
+                else:
+                    board[nx][ny] = 'B'
+                    dfs(nx, ny)
+            
+        
+        cx, cy = click[0], click[1]
+        if board[cx][cy] == 'M':
+            board[cx][cy] = 'X'
+        else:
+            count = count_mines(cx, cy)
+            if count != 0:
+                board[cx][cy] = str(count)
+            else:
+                board[cx][cy] = 'B'
+                dfs(cx, cy)
+        return board
+        
