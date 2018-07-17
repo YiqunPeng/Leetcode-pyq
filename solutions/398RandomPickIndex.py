@@ -4,7 +4,7 @@ class Solution:
         """
         :type nums: List[int]
         """
-        self.nums = copy.deepcopy(nums)
+        self.nums = nums[:]
         
 
     def pick(self, target):
@@ -27,3 +27,9 @@ class Solution:
                 ans = i
         
         return ans
+        
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(nums)
+# param_1 = obj.pick(target)
