@@ -5,27 +5,18 @@ class Solution(object):
         :rtype: str
         """
         stack = []
+        word = ''
+        for c in s:
+            if c == ' ' and word:
+                stack.append(word)
+                word = ''
+            elif c != ' ':
+                word += c
+        if word: stack.append(word)
         
-        s_len = len(s)
-        pos = 0
-        temp = ''
-        while pos < s_len:
-            if s[pos] == ' ': 
-                stack.append(temp)
-                temp = ''
-            else:
-                temp += s[pos]
-            pos += 1
-        
-        stack.append(temp)
-        
-        ans = ''
-        for i in range(len(stack)-1, -1, -1):
-            if stack[i] == '': continue
-            ans = ans + stack[i] + ' '
-        
-        if len(ans) > 0 and ans[-1] == ' ':
-            return ans[:-1]
-        else:
-            return ans
+        ans = stack.pop() if stack else ''
+        while stack:
+            ans = ans + ' ' + stack.pop()
+        return ans
+                    
             

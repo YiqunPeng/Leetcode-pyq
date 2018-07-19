@@ -4,16 +4,12 @@ class Solution:
         :type s: str
         :rtype: bool
         """
-        dic = {}
+        s_set = set()
         
         for c in s:
-            dic[c] = dic.get(c, 0) + 1
+            if c not in s_set:
+                s_set.add(c)
+            else:
+                s_set.remove(c)
         
-        odd = 0
-        for key in dic:
-            if dic[key] % 2 == 1:
-                odd += 1
-                if odd > 1:
-                    return False
-        
-        return True
+        return len(s_set) <= 1

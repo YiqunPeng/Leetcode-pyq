@@ -1,26 +1,21 @@
-class Solution(object):
+from queue import Queue
+
+class Solution:
     def islandPerimeter(self, grid):
         """
         :type grid: List[List[int]]
         :rtype: int
         """
-        ans = 0
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if grid[r][c] == 1:
-                    ans += self.count_perimeter(grid, r, c)
+        ans = 0        
+        m, n = len(grid), len(grid[0])
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    ans += 4
+                    if i > 0 and grid[i-1][j] == 1:
+                        ans -= 2
+                    if j > 0 and grid[i][j-1] == 1:
+                        ans -= 2
         
         return ans
-    
-    def count_perimeter(self, grid, r, c):
-        block = 0
-        if (r-1)>=0 and grid[r-1][c] == 1:
-            block += 1
-        if (r+1)<len(grid) and grid[r+1][c] == 1:
-            block += 1
-        if (c-1)>=0 and grid[r][c-1] == 1:
-            block += 1
-        if (c+1)<len(grid[0]) and grid[r][c+1] == 1:
-            block += 1
-        return 4 - block
-        

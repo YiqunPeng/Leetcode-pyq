@@ -1,4 +1,5 @@
 class Solution:
+    # backtracking/recursion
     def subsets(self, nums):
         """
         :type nums: List[int]
@@ -18,4 +19,22 @@ class Solution:
             backtracking(ans, [], nums, 0, i)
             
         return ans
+    
+    # bit manipulation
+    # def subsets(self, nums):
+    #     """
+    #     :type nums: List[int]
+    #     :rtype: List[List[int]]
+    #     """
+    #     n = len(nums)
+    #     bits = [bin(i)[2:] for i in range(2**n)]
         
+    #     ans = []
+    #     for bit in bits:
+    #         sub = []
+    #         for i in range(1, len(bit)+1):
+    #             if bit[-i] == '1':
+    #                 sub.append(nums[-i])
+    #         ans.append(sub)
+        
+    #     return ans
