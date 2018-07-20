@@ -1,4 +1,7 @@
 class Solution:
+    # string
+    # time: O(n * k) -- k = min(strs, key=len)
+    # space: O(1)
     def longestCommonPrefix(self, strs):
         """
         :type strs: List[str]

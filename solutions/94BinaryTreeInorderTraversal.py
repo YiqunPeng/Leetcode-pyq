@@ -11,27 +11,17 @@ class Solution:
         :type root: TreeNode
         :rtype: List[int]
         """
+        if not root: return []
+        
         ans = []
         stack = []
-        mode = 'push'
-        
-        if not root: return ans
-        
-        stack.append(root)
-        while stack:
-            node = stack[-1]
-            if mode == 'push':
-                while node.left:
-                    stack.append(node.left)
-                    node = node.left
-                mode = 'pop'
-            
-            ans.append(node.val)
-            stack.pop(-1)
-            if node.right:
-                stack.append(node.right)
-                mode = 'push'
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            ans.append(root.val)
+            root = root.right
         
         return ans
-            
         
