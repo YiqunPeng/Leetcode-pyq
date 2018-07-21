@@ -1,16 +1,22 @@
-class Solution(object):
+class Solution:
+    # string
+    # time: O(n * m) n -- len(haystack); m -- len(needle)
+    # space: O(1)
     def strStr(self, haystack, needle):
         """
         :type haystack: str
         :type needle: str
         :rtype: int
         """
-        if haystack == '' and needle == '': return 0
+        if not needle: return 0
+        if not haystack: return -1
         
-        n_len = len(needle)
-        for i in xrange(len(haystack)-n_len+1):
-            temp = haystack[i:(i+n_len)]
-            if temp == needle:
+        h_len, n_len = len(haystack), len(needle)
+        
+        for i in range(h_len - n_len + 1):
+            if haystack[i:i+n_len] == needle:
                 return i
-            
+        
         return -1
+        
+        

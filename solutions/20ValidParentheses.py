@@ -1,20 +1,23 @@
-class Solution(object):
+class Solution():
+    # stack
+    # time: O(n)
+    # space: O(n)
     def isValid(self, s):
         """
         :type s: str
         :rtype: bool
         """
-        p_stack = []
-        for c in s:
-            if c in ['(', '[', '{']:
-                p_stack.append(c)
-            else:
-                if len(p_stack) == 0:
-                    return False
-                temp = p_stack.pop(-1)
-                if (c == ')' and temp != '(') or (c == ']' and temp != '[') or (c == '}' and temp != '{'):
-                    return False
-        if len(p_stack) != 0:
-            return False
+        dic = {'(': 1, '[': 2, '{': 3, ')': -1, ']': -2, '}': -3}
         
-        return True
+        stack = []
+        for c in s:
+            if dic[c] > 0:
+                stack.append(dic[c])
+            else:
+                if not stack: return False
+                if stack[-1] + dic[c] != 0: 
+                    return False
+                else:
+                    stack.pop()
+        
+        return stack == []
