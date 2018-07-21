@@ -5,6 +5,9 @@
 #         self.next = None
 
 class Solution:
+    # two pointer
+    # time: O(n)
+    # space: O(1)
     def removeNthFromEnd(self, head, n):
         """
         :type head: ListNode
@@ -12,14 +15,11 @@ class Solution:
         :rtype: ListNode
         """
         left, right = head, head
-        for i in range(n-1):
-            right = right.next
         
-        if right.next:
+        for i in range(n):
             right = right.next
-        else:
-            return head.next
-        
+        if not right: return head.next
+
         while right.next:
             left = left.next
             right = right.next
