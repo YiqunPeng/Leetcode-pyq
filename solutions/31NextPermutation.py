@@ -1,22 +1,59 @@
 class Solution:
+    # math, reverse sort
+    # time: O(n)
+    # space: O(1)
     def nextPermutation(self, nums):
         """
         :type nums: List[int]
         :rtype: void Do not return anything, modify nums in-place instead.
         """
-        pos = -1
-        for i in range(len(nums)-1, 0, -1):
+        n = len(nums)
+        pos = 0
+        
+        for i in range(n - 1, 0, -1):
             if nums[i] > nums[i-1]:
                 pos = i
                 break
-        
-        min_pos = pos
-        if pos <= 0: 
-            pos = 0
-        else:
-            for i in range(pos, len(nums)):
-                if nums[i] > nums[pos-1] and nums[i] < nums[min_pos]:
-                    min_pos = i      
+                
+        if pos > 0:
+            min_pos = 0
+            for i in range(n - 1, pos - 1, -1):
+                if nums[i] > nums[pos-1]: 
+                    min_pos = i  
+                    break
             nums[pos-1], nums[min_pos] = nums[min_pos], nums[pos-1]
                 
-        nums[pos:] = sorted(nums[pos:])
+        left, right = pos, n - 1
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left, right = left + 1, right - 1
+
+    # previous permutation
+    # reverse sort
+    # time: O(n)
+    # space: O(1)
+    # def previousPermutation(self, nums):
+    #     """
+    #     :type nums: List[int]
+    #     :rtype: void Do not return anything, modify nums in-place instead.
+    #     """
+    #     n = len(nums)
+    #     pos = 0
+
+    #     for i in range(n - 1, 0, -1):
+    #         if nums[i] < nums[i-1]:
+    #             pos = i
+    #             break
+
+    #     if pos > 0:
+    #         max_pos = 0
+    #         for i in range(n - 1, pos - 1, -1):
+    #             if nums[i] < nums[pos-1]:
+    #                 max_pos = i
+    #                 break
+    #         nums[pos-1], nums[max_pos] = nums[max_pos], nums[pos-1]
+
+    #     left, right = pos, n - 1
+    #     while left < right:
+    #         nums[left], nums[right] = nums[right], nums[left]
+    #         left, right = left + 1, right - 1
