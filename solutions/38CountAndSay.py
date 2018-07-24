@@ -1,23 +1,26 @@
-class Solution(object):
+class Solution:
+    # string
+    # time: O(n * m) m -- sequence length
+    # space: O(m)
     def countAndSay(self, n):
         """
         :type n: int
         :rtype: str
         """
         s = '1'
-        if n == 1: return s
+        if n <= 1: return s
         
-        for i in xrange(1, n):
-            temp = ''
+        for i in range(1, n):
+            next_s = ''
             cnt = 1
             c = s[0]
-            for j in xrange(1, len(s)):
+            for j in range(1, len(s)):
                 if s[j] == c:
                     cnt += 1
                 else:
-                    temp = temp + str(cnt) + c
+                    next_s = next_s + str(cnt) + c
                     cnt = 1
                     c = s[j]
-            s = temp + str(cnt) + c
+            s = next_s + str(cnt) + c
         
         return s
