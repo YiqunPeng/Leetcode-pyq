@@ -16,12 +16,10 @@ class Solution:
                 break
                 
         if pos > 0:
-            min_pos = 0
             for i in range(n - 1, pos - 1, -1):
                 if nums[i] > nums[pos-1]: 
-                    min_pos = i  
+                    nums[pos-1], nums[i] = nums[i], nums[pos-1]  
                     break
-            nums[pos-1], nums[min_pos] = nums[min_pos], nums[pos-1]
                 
         left, right = pos, n - 1
         while left < right:
