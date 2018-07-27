@@ -11,21 +11,13 @@ class Solution:
         :type G: List[int]
         :rtype: int
         """
-        table = [-1] * 10000
-        for g in G:
-            table[g] = 1
-            
-        ans = 0
-        flag = 0
+        G = set(G)
+        ans = len(G)
         
         while head:
-            if table[head.val] == 1:
-                flag = 1
-            elif table[head.val] == -1:
-                ans += flag
-                flag = 0
+            while head.val in G and head.next and head.next.val in G:
+                head = head.next
+                ans -= 1
             head = head.next
-        
-        return ans + flag
             
-        
+        return ans
