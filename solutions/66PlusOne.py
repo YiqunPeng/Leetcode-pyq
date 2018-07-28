@@ -1,11 +1,9 @@
-class Solution(object):
+class Solution():
     def plusOne(self, digits):
         """
         :type digits: List[int]
         :rtype: List[int]
         """
-        if digits[0] == 0: return [1]
-        
         pos = len(digits) - 1
         digits[pos] += 1
         
@@ -13,6 +11,8 @@ class Solution(object):
             if digits[pos] >= 10:
                 digits[pos] -= 10
                 digits[pos-1] += 1
+            else:
+                return digits
             pos -= 1
                 
         if digits[0] == 10:

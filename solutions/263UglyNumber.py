@@ -1,20 +1,20 @@
-class Solution(object):
+class Solution:
     def isUgly(self, num):
         """
         :type num: int
         :rtype: bool
         """
-        if num <= 0:
-            return False
-        
-        if num == 1:
-            return True
+        if num <= 0: return False
+        if num == 1: return True
         
         while num % 2 == 0:
-            num = num / 2
-        while num % 3 == 0:
-            num = num / 3
-        while num % 5 == 0:
-            num = num / 5
+            num //= 2
+        if num == 1: return True
         
-        return True if num == 1 else False
+        while num % 3 == 0:
+            num //= 3
+        if num == 1: return True
+            
+        while num % 5 == 0:
+            num //= 5
+        return num == 1
