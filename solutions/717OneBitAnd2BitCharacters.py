@@ -3,15 +3,14 @@ class Solution:
         """
         :type bits: List[int]
         :rtype: bool
-        """        
-        while len(bits) >= 2:
-            if bits[0] == 0:
-                bits.pop(0)
+        """  
+        pos = 0
+        while True:
+            if pos == len(bits) - 1: 
+                return True
+            elif pos == len(bits) - 2 and bits[pos] == 1:
+                return False
+            if bits[pos] == 1:
+                pos += 2
             else:
-                bits.pop(0)
-                bits.pop(0)
-        
-        if len(bits) == 1:
-            return True
-        else:
-            return False
+                pos += 1

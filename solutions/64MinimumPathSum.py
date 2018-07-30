@@ -4,19 +4,17 @@ class Solution:
         :type grid: List[List[int]]
         :rtype: int
         """
-        if not grid: return 0
-        
+        if not grid: return 0  
         m, n = len(grid), len(grid[0])
         
-        dp = [[0 for j in range(n)] for i in range(m)]
-        dp[0][0] = grid[0][0]
-        for i in range(1, m):
-            dp[i][0] = grid[i][0] + dp[i-1][0]
+        dp = [0 for j in range(n)]
+        dp[0] = grid[0][0]
         for j in range(1, n):
-            dp[0][j] = grid[0][j] + dp[0][j-1]
+            dp[j] = grid[0][j] + dp[j-1]
             
         for i in range(1, m):
+            dp[0] += grid[i][0]
             for j in range(1, n):
-                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
+                dp[j] = min(dp[j], dp[j-1]) + grid[i][j]
         
-        return dp[-1][-1]
+        return dp[-1]

@@ -1,18 +1,20 @@
 class Solution:
+    # hash table
+    # time: O(n)
+    # space: O(n)
     def anagramMappings(self, A, B):
         """
         :type A: List[int]
         :type B: List[int]
         :rtype: List[int]
         """
+        b_dict = collections.defaultdict(list)
+        for i in range(len(B)):
+            b_dict[B[i]].append(i)
+            
         ans = []
-        
-        len_a = len(A)
-        for i in range(len_a):
-            len_b = len(B)
-            for j in range(len_b):
-                if B[j] == A[i]:
-                    ans.append(j)
-                    break
-                    
+        for a in A:
+            ans.append(b_dict[a][-1])
+            b_dict[a].pop()
         return ans
+    
