@@ -15,13 +15,14 @@ class Solution:
         
         ans = []
         stack = []
+        
         while stack or root:
-            while root:
+            if root:
                 stack.append(root)
                 root = root.left
-            root = stack.pop()
-            ans.append(root.val)
-            root = root.right
+            else:
+                root = stack.pop()
+                ans.append(root.val)
+                root = root.right
         
         return ans
-        
