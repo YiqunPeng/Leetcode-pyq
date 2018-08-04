@@ -11,16 +11,16 @@ class Solution:
         :type root: TreeNode
         :rtype: List[int]
         """
-        if not root: return []
-        
         ans = []
-        nodes = [root]
-        while nodes:
-            top = nodes.pop(-1)
-            ans.append(top.val)
-            if top.right:
-                nodes.append(top.right)
-            if top.left:
-                nodes.append(top.left)
+        stack = []
         
+        while root or stack:
+            if root:
+                ans.append(root.val)
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                root = root.right
+                
         return ans
