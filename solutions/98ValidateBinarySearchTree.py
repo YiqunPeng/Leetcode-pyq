@@ -8,7 +8,7 @@
 class Solution:
     # iterative, inorder
     # time: O(n)
-    # space: O(1)
+    # space: O(n)
     def isValidBST(self, root):
         """
         :type root: TreeNode
@@ -34,7 +34,7 @@ class Solution:
         
     # recursive, inorder
     # time: O(n)
-    # space: O(1)
+    # space: O(n)
     # def isValidBST(self, root):
     #     """
     #     :type root: TreeNode
