@@ -1,5 +1,3 @@
-from queue import Queue
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -15,15 +13,13 @@ class Solution:
         """
         if not root: return 0
         
-        q = Queue()
-        q.put((root, 1))
-        while not q.empty():
-            node, depth = q.get()
+        q = collections.deque([(root, 1)])
+        while q:
+            node, depth = q.popleft()
             if not node.left and not node.right:
                 return depth
             if node.left:
-                q.put((node.left, depth+1))
+                q.append((node.left, depth+1))
             if node.right:
-                q.put((node.right, depth+1))
-        
-        
+                q.append((node.right, depth+1))
+         
