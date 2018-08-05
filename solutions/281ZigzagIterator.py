@@ -1,3 +1,6 @@
+# queue
+# time: O(n) n -- number of total elements
+# space: O(k) k -- number of vectors
 class ZigzagIterator(object):
 
     def __init__(self, v1, v2):
@@ -6,43 +9,24 @@ class ZigzagIterator(object):
         :type v1: List[int]
         :type v2: List[int]
         """
-        self.v1 = v1
-        self.v2 = v2
-        self.vectors = [self.v1, self.v2]
-        self.num_vec = len(self.vectors)
-        self.curr_vec = 0
-        self.pos = [0, 0]
-        self.length = [len(self.v1), len(self.v2)]
+        self.vectors = [v1, v2]
+        self.queue = collections.deque()
+        for i in range(len(self.vectors)):
+            if self.vectors[i]: self.queue.append((i, 0))
         
-
     def next(self):
         """
         :rtype: int
         """
-        val = 0
-        if self.pos[self.curr_vec] < self.length[self.curr_vec]:
-            val = self.vectors[self.curr_vec][self.pos[self.curr_vec]]
-            self.pos[self.curr_vec] += 1
-            self.curr_vec = (self.curr_vec + 1) % self.num_vec
-        else:
-            for i in range(self.num_vec-1):
-                curr = (self.curr_vec + 1 + i) % self.num_vec
-                if self.pos[curr] < self.length[curr]:
-                    val = self.vectors[curr][self.pos[curr]]
-                    self.pos[curr] += 1
-                    self.curr_vec = (curr + 1) % self.num_vec
-        return val                  
-            
+        vec, pos = self.queue.popleft()
+        if pos + 1 < len(self.vectors[vec]): self.queue.append((vec, pos + 1))
+        return self.vectors[vec][pos]              
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        res = False
-        for i in range(self.num_vec):
-            if self.pos[i] < self.length[i]:
-                return True
-        return False
+        return True if self.queue else False
             
 
 # Your ZigzagIterator object will be instantiated and called as such:
