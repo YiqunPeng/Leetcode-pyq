@@ -5,9 +5,10 @@ class Solution:
         :rtype: int
         """
         stack = []
+        ops = set(['+', '-', '*', '/'])
         
         for t in tokens:
-            if t not in ['+', '-', '*', '/']:
+            if t not in ops:
                 stack.append(int(t))
             else:
                 b, a = stack.pop(), stack.pop()
@@ -18,6 +19,7 @@ class Solution:
                 elif t == '*':
                     stack.append(a * b)
                 else:
-                    stack.append(int(a / b))
+                    sign = a // abs(a) * b // abs(b) if a * b != 0 else 0
+                    stack.append(abs(a) // abs(b) * sign)
         
         return stack[0]

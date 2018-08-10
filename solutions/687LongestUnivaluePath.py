@@ -6,35 +6,31 @@
 #         self.right = None
 
 class Solution:
+    # dfs
+    # time: O(n)
+    # space: O(1)
     def longestUnivaluePath(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        def find_path(r):
-            if not r.left and not r.right:
-                return [0,0]
-            left, right = [0,0], [0,0]
-            v = r.val
-            l_v, r_v = v - 1, v - 1
-            if r.left:
-                l_v = r.left.val
-                left = find_path(r.left)
-            if r.right:
-                r_v = r.right.val
-                right = find_path(r.right)
-            if v == l_v and v == r_v:
-                two_side = left[1] + right[1] + 2
-                one_side = max(left[1], right[1]) + 1
-                return [max(two_side, one_side, left[0], right[0]), one_side]
-            elif v == l_v and v != r_v:
-                return [max(left[0],right[0],left[1]+1), left[1]+1]
-            elif v == r_v and v != l_v:
-                return [max(left[0],right[0],right[1]+1), right[1]+1]
-            else:
-                return [max(left[0],right[0]),0]
+        def dfs(node, max_b):
+            if not node: return 0, 0
+            if not node.left and not node.right: return 0, 0
             
-        
-        if not root: return 0
-        return max(find_path(root))
+            ls, lb = dfs(node.left, max_b)
+            rs, rb = dfs(node.right, max_b)
+            
+            res_s, res_b = 0, 0
+            if node.left and node.val == node.left.val:
+                res_s = ls + 1
+                res_b += ls + 1
+            if node.right and node.val == node.right.val:
+                res_s = max(res_s, rs + 1)
+                res_b += rs + 1
+            res_b = max(res_b, max_b, lb, rb)
+            
+            return res_s, res_b
+
+        return max(dfs(root, 0))
         
