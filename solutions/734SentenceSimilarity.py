@@ -9,16 +9,10 @@ class Solution:
         if len(words1) != len(words2): return False
         length = len(words1)
         
-        dic = {}
+        dic = collections.defaultdict(list)
         for pair in pairs:
-            if pair[0] not in dic:
-                dic[pair[0]] = [pair[1]]
-            else:
-                dic[pair[0]].append(pair[1])
-            if pair[1] not in dic:
-                dic[pair[1]] = [pair[0]]
-            else:
-                dic[pair[1]].append(pair[0])
+            dic[pair[0]].append(pair[1])
+            dic[pair[1]].append(pair[0])
         
         for i in range(length):
             if words1[i] == words2[i]: continue
@@ -26,4 +20,3 @@ class Solution:
                 return False
         
         return True
-        

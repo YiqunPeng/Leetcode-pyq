@@ -1,30 +1,31 @@
-class Solution(object):
+class Solution:
+    # hash
+    # time: O(n)
+    # space: O(n)
     def findAnagrams(self, s, p):
         """
         :type s: str
         :type p: str
         :rtype: List[int]
         """
-        if len(p) > len(s): return []
-        
         ans = []
-        p_dict = {}
+        
+        s_len, p_len = len(s), len(p)
+        
+        p_dict = collections.defaultdict(int)
+        s_dict = collections.defaultdict(int)
+        
         for c in p:
-            p_dict[c] = 1 + p_dict.get(c, 0)
+            p_dict[c] += 1
         
-        s_dict = {}
-        for i in xrange(0, len(p)):
-            s_dict[s[i]] = 1 + s_dict.get(s[i], 0)
-        if s_dict == p_dict:
-            ans.append(0)
-        
-        for i in xrange(1, len(s)-len(p)+1):
-            s_dict[s[i-1]] -= 1
-            s_dict[s[i+len(p)-1]] = 1 + s_dict.get(s[i+len(p)-1], 0)
-            for key in list(s_dict):
-                if s_dict[key] == 0:
-                    s_dict.pop(key)
+        for i in range(s_len):
+            pre = i - p_len
+            s_dict[s[i]] += 1
+
+            if pre >= 0:
+                s_dict[s[pre]] -= 1
+                if s_dict[s[pre]] == 0: del s_dict[s[pre]]
             if s_dict == p_dict:
-                ans.append(i)
+                ans.append(pre + 1)
         
         return ans

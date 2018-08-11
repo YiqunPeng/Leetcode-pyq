@@ -8,30 +8,27 @@ class Solution:
         """
         if S == T: return 0
         
-        v = [False] * len(routes)
+        v = set()
         
-        s2r = {}
+        s2r = collections.defaultdict(list)
         for i in range(len(routes)):
             for s in routes[i]:
-                if s not in s2r:
-                    s2r[s] = [i]
-                else:
-                    s2r[s].append(i)
+                s2r[s].append(i)
         
-        q = []
+        q = collections.deque()
         for i in range(len(routes)):
-            if S in routes[i] and not v[i]:
-                v[i] = True
+            if S in routes[i] and i not in v:
+                v.add(i)
                 for s in routes[i]:
                     q.append((s, 1))
         
         while q:
-            s, d = q.pop(0)
+            s, d = q.popleft()
             if s == T:
                 return d
             for r in s2r[s]:
-                if not v[r]:
-                    v[r] = True
+                if r not in v:
+                    v.add(r)
                     for ss in routes[r]:
                         q.append((ss, d+1))
         
