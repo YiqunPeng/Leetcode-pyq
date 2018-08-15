@@ -1,5 +1,5 @@
 class Solution:
-    # hash table
+    # walk through
     # time: O(n)
     # space: O(n)
     def longestConsecutive(self, nums):
@@ -8,24 +8,46 @@ class Solution:
         :rtype: int
         """
         nums = set(nums)
-        dict = collections.defaultdict(int)
-
         ans = 0
-
+        
         for num in nums:
-            left, right = dict[num-1], dict[num+1]
-            sum = left + right + 1
-
-            ans = max(ans, sum)
-
-            dict[num-left] = sum
-            dict[num+right] = sum
-
+            if num + 1 not in nums:
+                res = 1
+                pre = num - 1
+                while pre in nums:
+                    pre -= 1
+                    res += 1
+                ans = max(ans, res)
+        
         return ans
+        
+    # hash table
+    # time: O(n)
+    # space: O(n)
+    # def longestConsecutive(self, nums):
+    #     """
+    #     :type nums: List[int]
+    #     :rtype: int
+    #     """
+    #     nums = set(nums)
+    #     dict = collections.defaultdict(int)
+
+    #     ans = 0
+
+    #     for num in nums:
+    #         left, right = dict[num-1], dict[num+1]
+    #         sum = left + right + 1
+
+    #         ans = max(ans, sum)
+
+    #         dict[num-left] = sum
+    #         dict[num+right] = sum
+
+    #     return ans
         
         
     # union find
-    # time: O()
+    # time: O(n)
     # space: O(n)
     # def longestConsecutive(self, nums):
     #     """
