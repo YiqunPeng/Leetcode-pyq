@@ -4,25 +4,25 @@ class MagicDictionary:
         """
         Initialize your data structure here.
         """
-        self.dic = []
-        
-
+        self.words = set()
+        self.near = collections.defaultdict(int)
+    
+    def magic(self, word):
+        res = []
+        for i in range(len(word)):
+            res.append(word[:i] + '*' + word[i+1:])
+        return res
+    
     def buildDict(self, dict):
         """
         Build a dictionary through a list of words
         :type dict: List[str]
         :rtype: void
         """
-        max_len = -1
-        for word in dict:
-            if len(word) > max_len:
-                max_len = len(word)
-        for i in range(max_len):
-            self.dic.append([])
-        for word in dict:
-            l = len(word) - 1
-            self.dic[l].append(word)
-        
+        self.words = set(dict)
+        for word in self.words:
+            for m in self.magic(word):
+                self.near[m] += 1
 
     def search(self, word):
         """
@@ -30,20 +30,10 @@ class MagicDictionary:
         :type word: str
         :rtype: bool
         """
-        if len(word) > len(self.dic):
-            return False
-        word_list = self.dic[len(word)-1]
-        for w in word_list:
-            flag = 1
-            for i in range(len(word)):
-                if word[i] != w[i]:
-                    flag -= 1
-                if flag < 0:
-                    break
-            if flag == 0:
+        for m in self.magic(word):
+            if self.near[m] > 1 or (self.near[m] == 1 and word not in self.words):
                 return True
         return False
-        
 
 
 # Your MagicDictionary object will be instantiated and called as such:
