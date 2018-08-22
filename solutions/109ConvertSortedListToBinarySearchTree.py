@@ -12,27 +12,35 @@
 #         self.right = None
 
 class Solution:
-    def find_mid(self, head, tail):
-        if not head: return None
-        if head == tail: return None
-        f, s = head, head
-        while f.next and f.next != tail and f.next.next != tail:
-            f = f.next.next
-            s = s.next
-        return s
-        
-    def construct_tree(self, l_mid, l_head, l_tail):
-        if not l_mid: return None
-        root = TreeNode(l_mid.val)
-        root.left = self.construct_tree(self.find_mid(l_head, l_mid), l_head, l_mid)
-        root.right = self.construct_tree(self.find_mid(l_mid.next, l_tail), l_mid.next, l_tail)
-        return root
-    
+    # inorder traversal
+    # time: O(n)
+    # space: O(1)
     def sortedListToBST(self, head):
         """
         :type head: ListNode
         :rtype: TreeNode
         """
-        return self.construct_tree(self.find_mid(head, None), head, None)
-    
+        self.head = head
         
+        def generate(length):
+            if length == 0: return None
+            
+            node = TreeNode(0)
+            node.left = generate(length // 2)
+            
+            node.val = self.head.val
+            self.head = self.head.next
+            
+            node.right = generate(length - length // 2 - 1)
+            
+            return node
+            
+
+        n_head = head
+        
+        length = 0
+        while n_head:
+            length += 1
+            n_head = n_head.next
+            
+        return generate(length)
