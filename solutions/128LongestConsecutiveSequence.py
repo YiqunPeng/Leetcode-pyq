@@ -56,7 +56,7 @@ class Solution:
     #     """
     #     def union(n1, n2):
     #         f1, f2 = find(n1), find(n2)
-    #         if f1 != f2: father[n1] = f2
+    #         if f1 != f2: father[f1] = f2
 
     #     def find(n):
     #         if father[n] == n: return n
