@@ -4,17 +4,19 @@ class Solution:
         :type temperatures: List[int]
         :rtype: List[int]
         """
-        unsolved = [0]
-        days = len(temperatures)
-        ans = [0] * days
-
-        for i in range(1, days):
-            while len(unsolved) != 0:
-                if temperatures[unsolved[-1]] < temperatures[i]:
-                    ans[unsolved[-1]] = i - unsolved[-1]
-                    unsolved.pop(-1)
-                else:
-                    break
-            unsolved.append(i)                
-                
-        return ans
+        t = temperatures
+        n = len(t)
+        
+        ans = [0] * n
+        
+        stack = [0]
+        for i in range(1, n):
+            if t[stack[-1]] >= t[i]:
+                stack.append(i)
+            else:
+                while stack and t[stack[-1]] < t[i]:
+                    idx = stack.pop()
+                    ans[idx] = i - idx
+                stack.append(i)
+        
+        return ans    

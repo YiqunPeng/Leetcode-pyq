@@ -4,36 +4,34 @@ class Solution:
         :type s: str
         :rtype: str
         """
-        def dfs(s, pos, stack):
-            res = ''
-            val = 0
-            while pos < len(s):
-                if 0 <= ord(s[pos])-ord('0') <= 9:
-                    val = val * 10 + int(s[pos])
-                elif s[pos] == '[':
-                    str, pos = dfs(s, pos+1, stack+[val])
-                    res += str
-                    val = 0
-                elif s[pos] == ']':
-                    return res * stack.pop(-1), pos
-                else:
-                    res += s[pos]
-                pos += 1
-            return res, pos
-                
-               
-        ans = ''
-        val, pos = 0, 0
+        nums = set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
         
+        ans = ''  
+        stack = []
+        
+        pos = 0
+        cnt = 0
+        string = ''
         while pos < len(s):
-            if 0 <= ord(s[pos])-ord('0') <= 9:
-                val = val * 10 + int(s[pos])
+            if not stack:
+                ans = ans + string
+                string = ''
+            
+            if s[pos] in nums:
+                cnt = cnt * 10 + int(s[pos])
             elif s[pos] == '[':
-                res, pos = dfs(s, pos+1, [val])
-                ans += res 
-                val = 0
+                stack.append(string[:])
+                stack.append(cnt)
+                cnt = 0
+                string = ''
+            elif s[pos] == ']':
+                string = string * stack.pop()
+                string = stack.pop() + string
+                    
             else:
-                ans += s[pos]
+                string = string + s[pos]
+            
             pos += 1
         
+        if not stack: ans = ans + string
         return ans
