@@ -1,35 +1,24 @@
-class Solution(object):
+class Solution:
     def countSubstrings(self, s):
         """
         :type s: str
         :rtype: int
         """
-        def is_palindromic(string):
-            ori = list(string)
-            rev = [item for item in ori]
-            rev.reverse()
-            return True if ori == rev else False
+        s_len = len(s)      
+        dp = [[0] * s_len for i in range(s_len)]
         
-        cnt = [0] * len(s)
-        mark = [[0]*len(s) for i in xrange(len(s))]
-        for i in xrange(1, len(s)):
-            for j in xrange(i):
-                if s[j] == s[i]:
-                    if mark[j+1][i-1] == 1:
-                        cnt[i] += 1
-                        mark[j][i] = 1
-                    elif mark[j+1][i-1] == -1:
-                        mark[j][i] = -1
-                    else:
-                        if is_palindromic(s[j+1:i]):
-                            mark[j+1][i-1] = 1
-                            mark[j][i] = 1
-                            cnt[i] += 1
-                        else:
-                            mark[j+1][i-1] = -1
-                            mark[j][i] = -1
+        ans = 0
+        
+        for i in range(1, s_len):
+            for j in range(i):
+                if s[i] == s[j]:
+                    if i - j <= 2 or dp[j+1][i-1] == 1:
+                        ans += 1
+                        dp[j][i] = 1
+                        dp[j+1][i-1] = 1
+                    if dp[j+1][i-1] == -1:
+                        dp[j][i] = -1
                 else:
-                    mark[j][i] = -1
-            cnt[i] += cnt[i-1]
-        return cnt[len(s)-1] + len(s)
-                    
+                    dp[j][i] = -1
+        
+        return ans + s_len        
