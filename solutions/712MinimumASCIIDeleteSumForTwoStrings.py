@@ -21,6 +21,4 @@ class Solution:
                 else:
                     dp[i][j] = min(dp[i-1][j]+ord(s1[i-1]), dp[i][j-1]+ord(s2[j-1]))
         
-        return dp[m][n]
-        
-        
+        return dp[m][n] 
