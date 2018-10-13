@@ -13,28 +13,21 @@ class Solution:
         """
         if not root: return []
         
-        nodes = [root]
-        ans = [[root.val]]
-        depth = 2
+        ans = []
+        depth = 1
         
-        while nodes:
-            temp = []
+        lvl = [root]
+        while lvl:
             if depth % 2 == 1:
-                for i in range(len(nodes)-1, -1, -1):
-                    if nodes[i].left:
-                        temp.append(nodes[i].left)
-                    if nodes[i].right:
-                        temp.append(nodes[i].right)
+                ans.append([node.val for node in lvl])
             else:
-                for i in range(len(nodes)-1, -1, -1):
-                    if nodes[i].right:
-                        temp.append(nodes[i].right)
-                    if nodes[i].left:
-                        temp.append(nodes[i].left)
-            if temp:
-                ans.append([i.val for i in temp])
-            nodes = temp
+                ans.append([node.val for node in lvl][::-1])
             depth += 1
             
+            nxt = []
+            for node in lvl:
+                if node.left: nxt.append(node.left)
+                if node.right: nxt.append(node.right)
+            lvl = nxt
+        
         return ans
-            

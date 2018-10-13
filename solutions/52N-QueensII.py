@@ -4,36 +4,32 @@ class Solution:
         :type n: int
         :rtype: int
         """
-        def can_place(board, row, col, N):
-            for i in range(N):
-                if i == col: continue
-                if board[row][i] == -1:
-                    return False
-                              
-            for i in range(N):
-                if i == row: continue
-                if board[i][col] == -1:
-                    return False
-                if col-row+i < N and col-row+i >= 0 and board[i][col-row+i] == -1:
-                    return False
-                if col+row-i < N and col+row-i >= 0 and board[i][col+row-i] == -1:
-                    return False 
-                
-            return True
-                           
+        row_used, col_used, diag_used, subdiag_used = set(), set(), set(), set()
         
-        def backtracing(ans, board, n, N):
-            if n == N + 1:
-                return ans + 1
-            
-            line = board[n-1]
-            for i in range(N):
-                if can_place(board, n-1, i, N):
-                    line[i] = -1
-                    ans = backtracing(ans, board, n+1, N)
-                    line[i] = 0
-            
-            return ans
         
-        board = [[0 for i in range(n)] for j in range(n)]
-        return backtracing(0, board, 1, n)
+        def can_place(r, c):
+            return r not in row_used and c not in col_used and r + c not in subdiag_used and r - c not in diag_used
+    
+    
+        def backtracking(row):
+            if row == n: return 1
+            
+            res = 0
+            for col in range(n):
+                if can_place(row, col):
+                    row_used.add(row)
+                    col_used.add(col)
+                    diag_used.add(row - col)
+                    subdiag_used.add(row + col)
+                    
+                    res += backtracking(row + 1)
+                    
+                    subdiag_used.remove(row + col)
+                    diag_used.remove(row - col)
+                    col_used.remove(col)
+                    row_used.remove(row)
+            
+            return res
+            
+            
+        return backtracking(0)

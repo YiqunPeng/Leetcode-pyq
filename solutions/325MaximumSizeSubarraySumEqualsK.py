@@ -6,31 +6,21 @@ class Solution:
         :rtype: int
         """
         if not nums: return 0
+        n = len(nums)      
         
-        nums_len = len(nums)
-        
-        pre = [0] * nums_len
-        pre[0] = nums[0]
-        
-        dic = {pre[0]:[0]}
-        
-        for i in range(1, nums_len):
-            pre[i] = pre[i-1] + nums[i]
-            if pre[i] in dic:
-                dic[pre[i]].append(i)
-            else:
-                dic[pre[i]] = [i]
+        prefix = [0] * n
+        prefix[0] = nums[0]
+        sum_dict = collections.defaultdict(list)
+        sum_dict[0] = [-1]
+        sum_dict[prefix[0]].append(0)
+        for i in range(1, n):
+            prefix[i] = prefix[i-1] + nums[i]
+            sum_dict[prefix[i]].append(i)
         
         ans = 0
-        for key, value in dic.items():
-            if key == k:
-                ans = max(ans, value[-1] + 1)
-            else:
-                diff = key - k
-                if diff in dic:
-                    ans = max(ans, dic[key][-1] - dic[diff][0])
-        
+        for key, val in sum_dict.items():
+            d = key - k
+            if d in sum_dict:
+                if val[-1] >= sum_dict[d][0]:
+                    ans = max(ans, val[-1] - sum_dict[d][0])
         return ans
-            
-        
-        

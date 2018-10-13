@@ -4,52 +4,34 @@ class Solution:
         :type n: int
         :rtype: List[List[str]]
         """
-        def add_to_ans(ans, b, N):
-            n_b = []
-            for i in range(N):
-                temp = ''
-                for j in range(N):
-                    if b[i][j] == 0:
-                        temp = temp + '.'
-                    else:
-                        temp = temp + 'Q'
-                n_b.append(temp)
-            ans.append(n_b)
-            
+        col_used, row_used, diag_used, subdiag_used = set(), set(), set(), set()
+        board = [['.'] * n for i in range(n)]
         
-        def can_place(board, row, col, N):
-            for i in range(N):
-                if i == col: continue
-                if board[row][i] == -1:
-                    return False
-                              
-            for i in range(N):
-                if i == row: continue
-                if board[i][col] == -1:
-                    return False
-                if col-row+i < N and col-row+i >= 0 and board[i][col-row+i] == -1:
-                    return False
-                if col+row-i < N and col+row-i >= 0 and board[i][col+row-i] == -1:
-                    return False 
-                
-            return True
-                           
+        ans = []        
         
-        def backtracing(ans, board, n, N):
-            # print(ans)
-            if n == N + 1:
-                add_to_ans(ans, board, N)
-                return 
-            
-            line = board[n-1]
-            for i in range(N):
-                if can_place(board, n-1, i, N):
-                    line[i] = -1
-                    backtracing(ans, board, n+1, N)
-                    line[i] = 0
+        def can_place(x, y):
+            return x not in row_used and y not in col_used and x + y not in subdiag_used and x - y not in diag_used
+                   
+        def backtracking(row):
+            if row == n: 
+                ans.append([''.join(board[i]) for i in range(n)])
+                return
+            for col in range(n):
+                if can_place(row, col):
+                    board[row][col] = 'Q'
+                    col_used.add(col)
+                    row_used.add(row)
+                    subdiag_used.add(row + col)
+                    diag_used.add(row - col)
+                    
+                    backtracking(row + 1)
+                    
+                    col_used.remove(col)
+                    row_used.remove(row)
+                    subdiag_used.remove(row + col)
+                    diag_used.remove(row - col)
+                    board[row][col] = '.'
+                    
 
-        
-        ans = []
-        board = [[0 for i in range(n)] for j in range(n)]
-        backtracing(ans, board, 1, n)
+        backtracking(0)
         return ans
