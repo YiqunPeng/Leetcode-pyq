@@ -5,22 +5,14 @@ class Solution:
         :type wordDict: List[str]
         :rtype: bool
         """
-        s_len = len(s)
+        wordDict = set(wordDict)
+        n = len(s)
+        dp = [False] * n
         
-        dp = [0] * (s_len + 1)
-        if s[0] in wordDict:
-            dp[1] = 1
-        else:
-            dp[1] = 0
+        for i in range(n):
+            if s[:i+1] in wordDict:
+                dp[i] = True
+            else:
+                dp[i] = any(dp[j] and s[j+1:i+1] in wordDict for j in range(i))
         
-        for i in range(1, s_len+1):
-            if s[0:i] in wordDict:
-                dp[i] = 1
-                continue
-            for j in range(0, i):
-                if dp[j] == 1:
-                    if s[j:i] in wordDict:
-                        dp[i] = 1
-                        break
-        
-        return dp[-1] == 1
+        return dp[-1]
