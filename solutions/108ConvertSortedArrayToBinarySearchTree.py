@@ -11,18 +11,12 @@ class Solution:
         :type nums: List[int]
         :rtype: TreeNode
         """
-        def to_BST(nums, l, r):
-            if l == r: return TreeNode(nums[l])
-            mid = (l + r + 1) // 2
-            val = nums[mid]
-            node = TreeNode(val)
-            if l <= mid-1:
-                node.left = to_BST(nums, l, mid-1)
-            if mid+1 <= r:
-                node.right = to_BST(nums, mid+1, r)
-            return node
-        
-        
         if not nums: return None
+
+        mid = len(nums) // 2
+        root = TreeNode(nums[mid])
         
-        return to_BST(nums, 0, len(nums)-1)
+        if len(nums) != 1:
+            root.left = self.sortedArrayToBST(nums[:mid])
+            root.right = self.sortedArrayToBST(nums[mid+1:])
+        return root

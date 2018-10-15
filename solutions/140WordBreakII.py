@@ -1,3 +1,35 @@
+class TreeNode:
+    
+    def __init__(self, char):
+        self.c = char
+        self.children = [None] * 26
+        self.is_end = False
+        
+        
+class Trie:
+    
+    def __init__(self):
+        self.root = TreeNode('')
+        
+    
+    def add_word(self, word):
+        node = self.root
+        for c in word:
+            if not node.children[ord(c) - ord('a')]:
+                node.children[ord(c) - ord('a')] = TreeNode(c)
+            node = node.children[ord(c) - ord('a')]
+        node.is_end = True
+    
+    
+    def search_word(self, word):
+        node = self.root
+        for c in word:
+            if not node.children[ord(c) - ord('a')]:
+                return False
+            node = node.children[ord(c) - ord('a')]
+        return True if node.is_end else False
+
+
 class Solution:
     def wordBreak(self, s, wordDict):
         """
@@ -5,33 +37,32 @@ class Solution:
         :type wordDict: List[str]
         :rtype: List[str]
         """
-        ans = []
-        s_len = len(s)
-                
-        dp = [[] for i in range(s_len + 1)]
-        if s[0] in wordDict:
-            dp[1] = [1]
-        else:
-            dp[1] = []
+        memo = {}
         
-        for i in range(2, s_len+1):
-            if s[0:i] in wordDict:
-                dp[i] = [i]
-            else:
-                dp[i] = []
-            for j in range(1, i):
-                if dp[j] and s[j:i] in wordDict:
-                    dp[i].append(j)
-                
-        def backtracking(curr, pos):
-            for i in dp[pos]:
-                if i == pos:
-                    ans.append(curr)
-                else:
-                    backtracking(curr[0:i]+' '+curr[i:], i)
+        def dfs(s):
+            if s in memo:
+                return memo[s]
+            
+            res = []
+            if not s:
+                res.append('')
+                return res
+            
+            for i in range(len(s)):
+                if trie.search_word(s[:i+1]):
+                    sub_list = dfs(s[i+1:])
+                    for sub in sub_list:
+                        if sub:
+                            res.append(s[:i+1] + ' ' + sub)
+                        else:
+                            res.append(s[:i+1])
+            
+            memo[s] = res
+            return res
+                     
         
-        backtracking(s, s_len)
-
-        return ans
-                    
-        
+        trie = Trie()
+        for word in wordDict:
+            trie.add_word(word)
+            
+        return dfs(s)

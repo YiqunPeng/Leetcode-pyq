@@ -7,14 +7,14 @@ class Solution:
         """
         ans = 0
         
+        pre_sum = 0
         pre_dict = collections.defaultdict(int)
         pre_dict[0] = 1
-        pre = 0
         
         for i in range(len(nums)):
-            pre += nums[i]
-            d = pre - k
+            pre_sum += nums[i]
+            d = pre_sum - k
             ans += pre_dict[d]
-            pre_dict[pre] += 1
+            pre_dict[pre_sum] += 1
         
-        return ans
+        return ans        
