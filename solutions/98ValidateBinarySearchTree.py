@@ -35,21 +35,15 @@ class Solution:
     # recursive, inorder
     # time: O(n)
     # space: O(n)
-    # def isValidBST(self, root):
+    # def isValidBST(self, root, min_v = -sys.maxsize, max_v = sys.maxsize):
     #     """
     #     :type root: TreeNode
     #     :rtype: bool
     #     """
-    #     def isValid(root, min_v, max_v):
-    #         if not root: return True
-    #         if root.val <= min_v or root.val >= max_v: return False
-    #         return isValid(root.left, min_v, root.val) and isValid(root.right, root.val, max_v)
-
     #     if not root: return True
-    #     return isValid(root, -sys.maxsize, sys.maxsize)
-        
+    #     if root.val <= min_v or root.val >= max_v: return False
 
+    #     if root.left and root.left.val >= root.val: return False
+    #     if root.right and root.right.val <= root.val: return False
 
-        
-        
-        
+    #     return self.isValidBST(root.left, min_v, root.val) and self.isValidBST(root.right, root.val, max_v)        
