@@ -1,12 +1,12 @@
-class Solution(object):
-    def titleToNumber(self, s):
+class Solution:
+    def maxProfit(self, prices):
         """
-        :type s: str
+        :type prices: List[int]
         :rtype: int
         """
         ans = 0
-        s_list = list(s)
-        s_list.reverse()
-        for i in xrange(len(s_list)):
-            ans += 26 ** i * (ord(s_list[i]) - ord('A') + 1)
+        
+        for i in range(1, len(prices)):
+            ans += max(0, prices[i] - prices[i-1])
+        
         return ans
