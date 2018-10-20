@@ -5,15 +5,11 @@ class Solution:
         :type target: int
         :rtype: int
         """
-        dp = [0] * (target + 1)
-        
-        for num in nums:
-            if num <= target:
-                dp[num] = 1
+        dp = [1] + [0] * target
         
         for i in range(1, target + 1):
             for num in nums:
                 if i - num >= 0:
-                    dp[i] += dp[i-num]
+                    dp[i] += dp[i - num]
         
-        return dp[target]
+        return dp[-1]                            

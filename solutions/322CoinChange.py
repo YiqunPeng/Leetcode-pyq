@@ -5,15 +5,11 @@ class Solution:
         :type amount: int
         :rtype: int
         """
-        dp = [sys.maxsize] * (amount + 1)
-        dp[0] = 0
-        for c in coins:
-            if c < len(dp):
-                dp[c] = 1
+        dp = [0] + [sys.maxsize] * amount
         
-        for i in range(len(dp)):
-            for c in coins:
-                if i - c > 0:
-                    dp[i] = min(dp[i], dp[i-c]+1)
+        for i in range(1, amount + 1):
+            for coin in coins:
+                if i >= coin:
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
         
-        return dp[-1] if dp[-1] != sys.maxsize else -1
+        return dp[-1] if dp[-1] != sys.maxsize else -1     
