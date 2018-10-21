@@ -6,25 +6,29 @@
 #         self.right = None
 
 class Solution:
-    # dfs
-    # time: O(n)
-    # space: O(1)
+    
+    def __init__(self):
+        self.ans = -sys.maxsize
+    
     def maxPathSum(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        def dfs(node, max_b):
-            if not node: return 0, max_b
+        def postorder(node):
             if not node.left and not node.right:
-                return node.val, max(node.val, max_b)
+                self.ans = max(self.ans, node.val)
+                return node.val
             
-            ls, lb = dfs(node.left, max_b)
-            rs, rb = dfs(node.right, max_b)
+            l, r = 0, 0
+            if node.left: l = postorder(node.left)
+            if node.right: r = postorder(node.right)
+                
+            s = max(0, l) + max(0, r) + node.val
+            self.ans = max(self.ans, s)
             
-            res_s = max(0, ls, rs) + node.val
-            res_b = max((max(0, ls) + max(0, rs) + node.val), lb, rb)
+            return max(l + node.val, r + node.val, node.val)
             
-            return res_s, res_b
         
-        return max(dfs(root, -sys.maxsize))
+        postorder(root)
+        return self.ans

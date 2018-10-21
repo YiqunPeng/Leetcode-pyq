@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def removeElement(self, nums, val):
         """
         :type nums: List[int]
@@ -6,8 +6,10 @@ class Solution(object):
         :rtype: int
         """
         pos = 0
+        
         for num in nums:
             if num != val:
                 nums[pos] = num
                 pos += 1
+        
         return pos

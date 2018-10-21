@@ -6,8 +6,9 @@ class Solution:
         :rtype: int
         """
         ans = 0
-        left, right = 0, 0
+        
         p = 1
+        left, right = 0, 0
         
         while right < len(nums):
             p *= nums[right]
@@ -15,8 +16,8 @@ class Solution:
             while left <= right and p >= k:
                 p //= nums[left]
                 left += 1
-                
+            
             ans += (right - left + 1)
             right += 1
-
+        
         return ans

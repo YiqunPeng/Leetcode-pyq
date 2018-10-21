@@ -4,18 +4,11 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        if not nums: return 0
+        pos = 0
         
-        length = 0
-        pre = nums[0] - 1
-        
-        for i in range(len(nums)):
-            if nums[i] == pre: 
-                continue
-            else:
-                length += 1
-                nums[length-1] = nums[i]
-                pre = nums[i]
-        
-        return length
-            
+        for num in nums:
+            if pos < 1 or num != nums[pos - 1]:
+                nums[pos] = num
+                pos += 1
+
+        return pos
