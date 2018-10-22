@@ -11,29 +11,16 @@ class Solution:
         :type root: TreeNode
         :rtype: List[int]
         """
-        def max_depth(node, d):
-            if not node: return d - 1
-            if not node.left and not node.right: return d
-            return max(max_depth(node.left, d+1), max_depth(node.right, d+1))
-        
-        
-        def dfs(ans, node, pos):
-            if node.right:
-                if ans[pos] == sys.maxsize:
-                    ans[pos] = node.right.val
-                dfs(ans, node.right, pos+1)
-            if node.left:
-                if ans[pos] == sys.maxsize:
-                    ans[pos] = node.left.val
-                dfs(ans, node.left, pos+1)
+        def view(node, depth):
+            if not node: return
             
-            
-        if not root: return []
+            if len(ans) == depth:
+                ans.append(node.val)
+                
+            view(node.right, depth + 1)
+            view(node.left, depth + 1)
         
-        depth = max_depth(root, 1)
-        ans = [sys.maxsize] * depth
-        ans[0] = root.val
         
-        dfs(ans, root, 1)
+        ans = []
+        view(root, 0)
         return ans
-        

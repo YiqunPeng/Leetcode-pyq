@@ -5,7 +5,6 @@ class HitCounter:
         Initialize your data structure here.
         """
         self.queue = collections.deque()
-        self.stamps = 0
         
 
     def hit(self, timestamp):
@@ -16,7 +15,6 @@ class HitCounter:
         :rtype: void
         """
         self.queue.append(timestamp)
-        self.stamps += 1
         
 
     def getHits(self, timestamp):
@@ -26,14 +24,9 @@ class HitCounter:
         :type timestamp: int
         :rtype: int
         """
-        while self.queue:
-            if timestamp - self.queue[0] >= 300:
-                self.queue.popleft()
-                self.stamps -= 1
-            else:
-                break
-        return self.stamps
-        
+        while self.queue and timestamp - self.queue[0] >= 300:
+            self.queue.popleft()
+        return len(self.queue)
 
 
 # Your HitCounter object will be instantiated and called as such:

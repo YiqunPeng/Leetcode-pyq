@@ -10,19 +10,11 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
-        if not headA or not headB:
-            return None
-        
         a, b = headA, headB
+        if not a or not b: return None
         
-        while a != b:
-            if a == None:
-                a = headB
-            else:
-                a = a.next
-            if b == None:
-                b = headA
-            else:
-                b = b.next
-        
+        while a is not b:
+            a = a.next if a else headB
+            b = b.next if b else headA
+
         return a

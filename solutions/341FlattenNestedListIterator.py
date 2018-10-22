@@ -30,34 +30,39 @@ class NestedIterator(object):
         Initialize your data structure here.
         :type nestedList: List[NestedInteger]
         """
-        def dfs(nestedList):
-            res = []
-            if not nestedList: return res
-            for nested_integer in nestedList:
-                if nested_integer.isInteger():
-                    res.append(nested_integer.getInteger())
-                else:
-                    res.extend(dfs(nested_integer.getList()))
-            return res
+        self.stack = []
+        for n_int in nestedList[::-1]:
+            if n_int.isInteger() or n_int.getList():
+                self.stack.append(n_int)
         
-        self.flatted = dfs(nestedList)
-        self.idx = 0
-            
 
     def next(self):
         """
         :rtype: int
         """
-        res = self.flatted[self.idx]
-        self.idx += 1
-        return res
-        
+        return self.stack.pop().getInteger()
+
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return self.idx < len(self.flatted)
+        if len(self.stack) == 0: return False
+        
+        top = self.stack[-1]
+        if top.isInteger():
+            return True
+        else:
+            while not top.isInteger():
+                li = top.getList()
+                self.stack.pop()
+                for n_int in li[::-1]:
+                    if n_int.isInteger() or n_int.getList(): 
+                        self.stack.append(n_int)
+                if len(self.stack) == 0: return False 
+                top = self.stack[-1]
+        
+        return len(self.stack) != 0
         
 
 # Your NestedIterator object will be instantiated and called as such:

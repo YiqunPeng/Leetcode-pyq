@@ -47,30 +47,22 @@ class Solution:
         :type nestedList: List[NestedInteger]
         :rtype: int
         """
-        def find_max_depth(nestedList, d):
-            res = d
-            print(nestedList)
-            for i in nestedList:
-                if i.isInteger():
-                    continue
-                else:
-                    res = max(res, find_max_depth(i.getList(), d+1))
-            return res
-        
-        
-        def sum_value(nestedList, depth):
-            ans = 0
-            for i in nestedList:
-                if i.isInteger():
-                    ans += i.getInteger() * depth
-                else:
-                    ans += sum_value(i.getList(), depth-1)
-            return ans
+        def dfs(n_list, depth):
+            if not n_list: return           
+            if len(levels) <= depth: levels.append([])
             
+            for i in n_list:
+                if i.isInteger():
+                    levels[depth].append(i.getInteger())
+                else:
+                    dfs(i.getList(), depth + 1)
         
-        if not nestedList: return 0
         
-        max_depth = find_max_depth(nestedList, 1)        
-        return sum_value(nestedList, max_depth)
-
-                
+        levels = []
+        dfs(nestedList, 0)
+        
+        ans = 0
+        depth = len(levels)
+        for i, l in enumerate(levels):
+            ans += sum(l) * (depth - i)
+        return ans
