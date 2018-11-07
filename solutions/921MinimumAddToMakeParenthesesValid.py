@@ -4,12 +4,16 @@ class Solution:
         :type S: str
         :rtype: int
         """
-        stack = []
+        count = 0
+        ans = 0
         
         for s in S:
-            if s == ')' and stack and stack[-1] == '(':
-                stack.pop()
-            else:
-                stack.append(s)
+            if s == '(': count += 1
+            if s == ')':
+                if count > 0:
+                    count -= 1
+                else:
+                    ans += 1
         
-        return len(stack)
+        return ans + count
+        

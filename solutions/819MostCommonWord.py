@@ -5,31 +5,18 @@ class Solution:
         :type banned: List[str]
         :rtype: str
         """
-        paragraph = paragraph.lower()
-        symbols = [' ', '!', '?', ',', ';', '.', '\'']
+        paragraph = re.sub(r'[^a-zA-Z]', ' ', paragraph).lower()
+        words = paragraph.split()
+        banned = set(banned)        
+        counter = collections.defaultdict(int)
         
-        dic = {}
-        word = ''
-        
-        for c in paragraph:
-            if c in symbols and word == '': continue
-            if c in symbols:
-                if word not in banned:
-                    dic[word] = dic.get(word, 0) + 1
-                word = ''
-            else:
-                word = word + c
-        
-        if word != '' and word not in banned:
-            dic[word] = dic.get(word, 0) + 1
-                    
-        ans = ''
-        cnt = -1
-        
-        for key in dic:
-            if dic[key] > cnt:
-                ans = key
-                cnt = dic[key]
+        ans = None
+        max_count = 0
+        for word in words:
+            if word in banned: continue
+            counter[word] += 1
+            if max_count < counter[word]:
+                max_count = counter[word]
+                ans = word
         
         return ans
-                

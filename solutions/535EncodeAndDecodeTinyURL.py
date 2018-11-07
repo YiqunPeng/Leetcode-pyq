@@ -1,5 +1,10 @@
 class Codec:
-    dic = {}
+    
+    def __init__(self):
+        self.url_dict = {}
+        self.short_url_set = set()
+        self.char_set = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 
     def encode(self, longUrl):
         """Encodes a URL to a shortened URL.
@@ -7,12 +12,15 @@ class Codec:
         :type longUrl: str
         :rtype: str
         """
-        char_set = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789'
-        code = ''.join(random.sample(char_set, 8))
-        while self.dic.has_key(code):
-            code = ''.join(random.sample(char_set, 8))
-        self.dic[code] = longUrl
-        return code
+        while True:
+            short_url = ''
+            for i in range(6):
+                short_url += self.char_set[random.randint(0, len(self.char_set) - 1)]
+            if short_url not in self.short_url_set:
+                self.url_dict[short_url] = longUrl
+                self.short_url_set.add(short_url)
+                return short_url
+        
 
     def decode(self, shortUrl):
         """Decodes a shortened URL to its original URL.
@@ -20,7 +28,8 @@ class Codec:
         :type shortUrl: str
         :rtype: str
         """
-        return self.dic[shortUrl]        
+        return self.url_dict[shortUrl]
+        
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
