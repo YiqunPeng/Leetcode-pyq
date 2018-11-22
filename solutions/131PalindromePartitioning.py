@@ -3,32 +3,19 @@ class Solution:
         """
         :type s: str
         :rtype: List[List[str]]
-        """
-        def is_palind(s, length):
-            l, r = 0, length-1
-            while l < r:
-                if s[l] != s[r]:
-                    return False
-                l += 1
-                r -= 1
-            return True
-        
-        
-        def backtracking(ans, cur_list, cur_str, cur_len):
-            if cur_len == 0:
-                ans.append(cur_list)
+        """ 
+        def backtracking(ans, curr_part, re_str):
+            re_len = len(re_str)
+            if re_len == 0:
+                ans.append(curr_part)
                 return
-            if cur_len == 1:
-                ans.append(cur_list + [cur_str])
-                return 
-            for i in range(1, cur_len+1):
-                str = cur_str[0:i]
-                if is_palind(str, i):
-                    backtracking(ans, cur_list+[str], cur_str[i:], cur_len-i)
+            for i in range(1, re_len + 1):
+                part = re_str[:i]
+                if part == part[::-1]:
+                    backtracking(ans, curr_part + [part], re_str[i:])
                     
  
         ans = []
-        backtracking(ans, [], s, len(s))
+        backtracking(ans, [], s)
         
-        return ans
-        
+        return ans  
