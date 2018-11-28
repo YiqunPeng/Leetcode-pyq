@@ -10,30 +10,22 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if not head: return None
-   
-        fast, slow = head, head
-    
         has_cycle = False
         
-        while fast and slow:
-            if not fast.next or not fast.next.next:
-                return None
-            fast = fast.next.next 
-            if not slow.next:
-                return None
+        slow = fast = head
+        while fast and fast.next:
             slow = slow.next
-            if fast == slow:
+            fast = fast.next.next
+            
+            if slow is fast: 
                 has_cycle = True
                 break
-        
+                
         if not has_cycle: return None
         
         start = head
-        while start != slow:
+        while start is not slow:
             start = start.next
             slow = slow.next
-        
-        return slow
             
-        
+        return start    

@@ -10,13 +10,12 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
-        if not head: return False
+        slow = fast = head
         
-        tortoise =  head
-        hare = head
-        while hare.next and hare.next.next:
-            tortoise = tortoise.next
-            hare = hare.next.next
-            if tortoise == hare: return True
-        
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            
+            if slow is fast: return True
+            
         return False

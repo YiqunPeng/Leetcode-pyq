@@ -5,19 +5,19 @@ class Solution:
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-        if not edges: return [0]
+        if n == 0: return []
+        if n == 1: return [0]
         
         graph = collections.defaultdict(set)
-        for e in edges:
-            graph[e[0]].add(e[1])
-            graph[e[1]].add(e[0])
+        for u, v in edges:
+            graph[u].add(v)
+            graph[v].add(u)
             
         curr = []
-        for v in graph:
-            if len(graph[v]) == 1:
-                curr.append(v)
-        
-        while 1:
+        for key, val in graph.items():
+            if len(val) == 1: curr.append(key)
+                
+        while True:
             nxt = []
             
             for node in curr:
@@ -25,6 +25,6 @@ class Solution:
                     graph[neighbor].remove(node)
                     if len(graph[neighbor]) == 1: nxt.append(neighbor)
                 del graph[node]
-
+                    
             if not nxt: return curr
             curr = nxt

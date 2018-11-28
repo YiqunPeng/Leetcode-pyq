@@ -6,40 +6,39 @@ class Solution:
         :type positions: List[List[int]]
         :rtype: List[int]
         """
-        grid = [[-1 for j in range(n)] for i in range(m)]
-        father = []
-        ans = []
+        def find(i, j):
+            if positions[parents[i, j]] != [i, j]:
+                pi, pj = positions[parents[i, j]]
+                parents[i, j] = find(pi, pj)
+            return parents[i, j]
         
-        def find(i1):
-            if father[i1] == i1:
-                return i1
-            else:
-                father[i1] = find(father[i1])
-                return father[i1]
+        
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        
+        islands = 0
+        ans = []     
+        seen = set()
+        parents = {}
+        
+        for idx, [i, j] in enumerate(positions):
+            seen.add((i, j))
+            neighbors = set()
+            for di, dj in directions:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < m and 0 <= nj < n and (ni, nj) in seen:
+                    neighbors.add(find(ni, nj))
             
-        cnt = 0
-        i_num = 0
-        
-        for x, y in positions:
-            new_island_flag = True
-            neighbor = set()
-            for n_x, n_y in [(x+1,y), (x-1,y), (x,y+1), (x,y-1)]:
-                if not (0 <= n_x < m and 0 <= n_y < n): continue
-                if grid[x][y] == -1 and grid[n_x][n_y] >= 0:
-                    new_island_flag = False
-                    grid[x][y] = find(grid[n_x][n_y])
-                elif grid[x][y] >= 0 and grid[n_x][n_y] >= 0:
-                    f_xy, f_nxy = find(grid[x][y]), find(grid[n_x][n_y])
-                    if f_nxy not in neighbor and f_xy != f_nxy:
-                        father[f_xy] = f_nxy
-                        i_num -= 1
-                        neighbor.add(f_nxy)
-            if new_island_flag:
-                father.append(cnt)
-                grid[x][y] = cnt
-                cnt += 1
-                i_num += 1
-            ans.append(i_num)
-        
+            if len(neighbors) == 0:
+                islands += 1
+                parents[i, j] = idx
+            else:
+                islands -= len(neighbors) - 1       
+                min_idx = min(neighbors)
+                for neighbor in neighbors:
+                    pi, pj = positions[neighbor]
+                    parents[pi, pj] = min_idx
+                parents[i, j] = min_idx
+                
+            ans.append(islands)
+            
         return ans
-        
