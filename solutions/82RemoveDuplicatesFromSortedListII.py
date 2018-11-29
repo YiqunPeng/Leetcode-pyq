@@ -9,33 +9,17 @@ class Solution:
         """
         :type head: ListNode
         :rtype: ListNode
-        """
-        if not head or not head.next:
-            return head
+        """   
+        dummy = ListNode(-1)
+        dummy.next = head
+        o_head = dummy
         
-        pre, curr = head, head.next
-        
-        while curr and curr.next:
-            n_curr = curr.next
-            if curr.val == pre.val and curr.val == n_curr.val:
-                pre.next = n_curr
+        while dummy.next:
+            if dummy.next.next and dummy.next.val == dummy.next.next.val:
+                while dummy.next.next and dummy.next.val == dummy.next.next.val:
+                    dummy.next = dummy.next.next
+                dummy.next = dummy.next.next     
             else:
-                pre = pre.next
-            curr = n_curr
-            
-        n_head = None
-        while head and head.next and head.val == head.next.val:
-            head = head.next.next
-            
-        n_head = head
-        t_head = n_head
+                if dummy.next: dummy = dummy.next
         
-        while t_head and t_head.next and t_head.next.next:
-            if t_head.next.val == t_head.next.next.val:
-                t_head.next = t_head.next.next.next
-            else:
-                t_head = t_head.next
-             
-        return n_head
-            
-                
+        return o_head.next
