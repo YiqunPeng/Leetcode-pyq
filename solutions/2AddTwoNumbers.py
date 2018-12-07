@@ -4,7 +4,6 @@
 #         self.val = x
 #         self.next = None
 
-
 class Solution:
     def addTwoNumbers(self, l1, l2):
         """
@@ -12,20 +11,29 @@ class Solution:
         :type l2: ListNode
         :rtype: ListNode
         """
-        l = ListNode(0)
-        head = l
+        head = ListNode(0)
+        old_head = head
+        
+        carry = 0
+        
         while l1 or l2:
+            nxt = ListNode(carry)
+            carry = 0
+            
             if l1:
-                l.val += l1.val
+                nxt.val += l1.val
                 l1 = l1.next
             if l2:
-                l.val += l2.val
+                nxt.val += l2.val
                 l2 = l2.next
-            if l1 or l2:
-                l.next = ListNode(l.val // 10)
-                l.val = l.val % 10
-                l = l.next
-        if l.val >= 10:
-            l.val -= 10
-            l.next = ListNode(1)
-        return head
+                
+            if nxt.val >= 10:
+                carry = 1
+                nxt.val -= 10
+                
+            head.next = nxt
+            head = head.next
+        
+        if carry == 1:
+            head.next = ListNode(1)
+        return old_head.next
