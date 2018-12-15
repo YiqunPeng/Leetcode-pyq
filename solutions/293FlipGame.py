@@ -6,10 +6,8 @@ class Solution:
         """
         ans = []
         
-        for i in range(len(s)-1):
-            if s[i] == '+' and s[i+1] == '+':
-                temp = s[0:i] + '--' + s[i+2:]
-                ans.append(temp)
-        
+        for i in range(1, len(s)):
+            if s[i-1] == s[i] == '+':
+                ans.append(s[:i-1] + '--' + s[i+1:])
+    
         return ans
-        
